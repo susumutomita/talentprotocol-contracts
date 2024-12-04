@@ -25,6 +25,7 @@ jobs:
         id: yarn-cache-dir-path
         run: |
           echo "dir=$(yarn cache dir)" | tee -a $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
 
       - name: Debug cache directory
         run: |
