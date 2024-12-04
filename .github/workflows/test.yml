@@ -49,12 +49,6 @@ jobs:
 
       - run: yarn install
 
-      - name: Debug after install
-        run: |
-          echo "Timing after yarn install"
-          date +%s
-          echo "Final cache size:"
-          du -sh $(yarn cache dir)
 
       - run: node_modules/.bin/solhint contracts/**/*.sol
       - run: node_modules/.bin/hardhat compile
