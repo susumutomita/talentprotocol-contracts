@@ -78,6 +78,7 @@ jobs:
           echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
           yarn cache dir
           ls -la /usr
+          echo "Timing after yarn install"
           ls -la /usr/local/share/.cache/yarn/v6
           echo "Timing after yarn install"
 
