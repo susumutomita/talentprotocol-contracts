@@ -41,9 +41,9 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node_modules-
 
       - name: Debug cache
         run: |
@@ -54,23 +54,23 @@ jobs:
           echo "Timing before yarn install"
           date +%s
 
-      - name: Get node_modules cache
-        uses: actions/cache@v4
-        id: node_modules
-        with:
-          path: |
-            **/node_modules
-          # Adding node version as cache key
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
+      # - name: Get node_modules cache
+      #   uses: actions/cache@v4
+      #   id: node_modules
+      #   with:
+      #     path: |
+      #       **/node_modules
+      #     # Adding node version as cache key
+      #     key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
 
-      - name: Debug cache
-        run: |
-          echo "Cache hit: ${{ steps.node_modules.outputs.cache-hit }}"
-          echo "Yarn cache location:"
-          yarn cache list --pattern
-          yarn cache dir
-          echo "Timing before yarn install"
-          date +%s
+      # - name: Debug cache
+      #   run: |
+      #     echo "Cache hit: ${{ steps.node_modules.outputs.cache-hit }}"
+      #     echo "Yarn cache location:"
+      #     yarn cache list --pattern
+      #     yarn cache dir
+      #     echo "Timing before yarn install"
+      #     date +%s
 
       - name: Install dependencies
         run: yarn install
