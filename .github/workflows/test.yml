@@ -45,6 +45,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: Debug cache
+        run: |
+          echo "Cache hit: ${{ steps.yarn-cache.outputs.cache-hit }}"
+          echo "Yarn cache location:"
+          yarn cache dir
+          echo "Timing before yarn install"
+          date +%s
+
       - name: Get node_modules cache
         uses: actions/cache@v４
         id: node_modules
