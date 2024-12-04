@@ -36,6 +36,7 @@ jobs:
       - name: Debug cache directory
         run: |
           echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          ls -la ${{ steps.yarn-cache-dir-path.outputs.dir }}
 
       # - uses: actions/cache@v4
       #   id: yarn-cache
