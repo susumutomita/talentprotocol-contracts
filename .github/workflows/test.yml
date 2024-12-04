@@ -73,7 +73,13 @@ jobs:
           date +%s
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          yarn cache dir
+          ls -la ${{ steps.yarn-cache-dir-path.outputs.dir }}
+
+
 
       - run: node_modules/.bin/solhint contracts/**/*.sol
       - run: node_modules/.bin/hardhat compile
