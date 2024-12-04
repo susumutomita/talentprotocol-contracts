@@ -54,11 +54,8 @@ jobs:
           date +%s
 
       - run: yarn install
-
-
-      - run: node_modules/.bin/solhint contracts/**/*.sol
-      - run: node_modules/.bin/hardhat compile
-      - run: node_modules/.bin/hardhat test
+      - name: Install dependencies
+        run: yarn install
 
       - name: Save Yarn cache
         if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -66,3 +63,8 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+
+      - run: node_modules/.bin/solhint contracts/**/*.sol
+      - run: node_modules/.bin/hardhat compile
+      - run: node_modules/.bin/hardhat test
