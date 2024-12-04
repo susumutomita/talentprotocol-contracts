@@ -45,6 +45,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: Get node_modules cache
+        uses: actions/cache@v４
+        id: node_modules
+        with:
+          path: |
+            **/node_modules
+          # Adding node version as cache key
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
+
       - name: Debug cache
         run: |
           echo "Cache hit: ${{ steps.yarn-cache.outputs.cache-hit }}"
