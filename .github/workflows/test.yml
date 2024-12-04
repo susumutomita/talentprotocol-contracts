@@ -36,7 +36,6 @@ jobs:
       - name: Debug cache directory
         run: |
           echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
-          ls -la ${{ steps.yarn-cache-dir-path.outputs.dir }}
 
       # - uses: actions/cache@v4
       #   id: yarn-cache
@@ -79,3 +78,8 @@ jobs:
       - run: node_modules/.bin/solhint contracts/**/*.sol
       - run: node_modules/.bin/hardhat compile
       - run: node_modules/.bin/hardhat test
+
+      - name: Debug cache directory
+        run: |
+          echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          ls -la ${{ steps.yarn-cache-dir-path.outputs.dir }}
