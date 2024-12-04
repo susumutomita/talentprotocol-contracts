@@ -79,15 +79,8 @@ jobs:
           yarn cache dir
           ls -la /usr
           ls -la /usr/local/share/.cache/yarn/v6
-
-
+          echo "Timing after yarn install"
 
       - run: node_modules/.bin/solhint contracts/**/*.sol
       - run: node_modules/.bin/hardhat compile
       - run: node_modules/.bin/hardhat test
-
-      - name: Debug cache directory
-        run: |
-          echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
-          yarn cache dir
-          ls -la ${{ steps.yarn-cache-dir-path.outputs.dir }}
