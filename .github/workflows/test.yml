@@ -21,11 +21,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Get yarn cache directory path
+      - name: Detect Yarn cache directory
         id: yarn-cache-dir-path
         run: |
-          echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
+          if yarn --version | grep '^1' > /dev/null; then
+            echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+          else
+            echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+          fi
 
       - name: Debug cache directory
         run: |
