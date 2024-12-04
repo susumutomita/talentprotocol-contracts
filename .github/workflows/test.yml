@@ -24,6 +24,7 @@ jobs:
       - name: Detect Yarn cache directory
         id: yarn-cache-dir-path
         run: |
+          echo "Yarn version: $(yarn --version)"
           if yarn --version | grep '^1' > /dev/null; then
             echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
           else
