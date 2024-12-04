@@ -21,47 +21,17 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Detect Yarn cache directory
+      - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: |
-          echo "Yarn version: $(yarn --version)"
-          if yarn --version | grep '^1' > /dev/null; then
-            echo "Yarn 1 detected"
-            echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-          else
-            echo "Yarn 2 detected"
-            echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-          fi
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - name: Debug cache directory
-        run: |
-          echo "Cache directory: ${{ steps.yarn-cache-dir-path.outputs.dir }}"
-
-      # - uses: actions/cache@v4
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node_modules-
-
-      # - name: Debug cache
-      #   run: |
-      #     echo "Cache hit: ${{ steps.yarn-cache.outputs.cache-hit }}"
-      #     echo "Yarn cache location:"
-      #     yarn cache list --pattern
-      #     yarn cache dir
-      #     echo "Timing before yarn install"
-      #     date +%s
-
-      - name: Get node_modules cache
-        uses: actions/cache@v4
-        id: yarn-cache
+      - uses: actions/cache@v4
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: |
-            **/node_modules
-          # Adding node version as cache key
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Debug cache
         run: |
