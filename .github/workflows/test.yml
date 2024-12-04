@@ -26,8 +26,10 @@ jobs:
         run: |
           echo "Yarn version: $(yarn --version)"
           if yarn --version | grep '^1' > /dev/null; then
+            echo "Yarn 1 detected"
             echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
           else
+            echo "Yarn 2 detected"
             echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
           fi
 
