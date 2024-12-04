@@ -64,7 +64,7 @@ jobs:
 
       - name: Debug cache
         run: |
-          echo "Cache hit: ${{ steps.yarn-cache.outputs.cache-hit }}"
+          echo "Cache hit: ${{ steps.node_modules.outputs.cache-hit }}"
           echo "Yarn cache location:"
           yarn cache dir
           echo "Timing before yarn install"
@@ -73,14 +73,6 @@ jobs:
       - run: yarn install
       - name: Install dependencies
         run: yarn install
-
-      - name: Save Yarn cache
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
 
       - run: node_modules/.bin/solhint contracts/**/*.sol
       - run: node_modules/.bin/hardhat compile
